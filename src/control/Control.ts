@@ -4,12 +4,23 @@ namespace Controls {
         private _element: JQuery;
         private _children: Array<Control> = [];
 
-        private _enabled: boolean = true;
+        private _enabled = true;
+        private _visible = true;
+        private _domInitialzed = false;
+        private _domCreated = false;
+        private _parent: Control;
+        private _uniqueId: string;
+
         public get enabled(): boolean {
-            if (this._parent)
+            if (this._parent) {
                 return this._enabled && this._parent.enabled;
+            }
 
             return this._enabled;
+        }
+
+        protected static addChildToDom(element: JQuery, control: Control): void {
+            element.append(control.getDomElement());
         }
 
         public set enabled(v: boolean) {
@@ -21,7 +32,7 @@ namespace Controls {
             }
         }
 
-        private _visible: boolean = true;
+
         public get visible(): boolean {
             return this._visible;
         }
@@ -29,7 +40,6 @@ namespace Controls {
             this._visible = v;
         }
 
-        private _domInitialzed: boolean = false;
         public get domInitialzed(): boolean {
             return this._domInitialzed;
         }
@@ -38,7 +48,6 @@ namespace Controls {
             this._domInitialzed = v;
         }
 
-        private _domCreated: boolean = false;
         public get domCreated(): boolean {
             return this._domCreated;
         }
@@ -46,7 +55,6 @@ namespace Controls {
             this._domCreated = v;
         }
 
-        private _parent: Control;
         public get parent(): Control {
             return this._parent;
         }
@@ -54,7 +62,6 @@ namespace Controls {
             this._parent = v;
         }
 
-        private _uniqueId: string;
         public get uniqueId(): string {
             return this._uniqueId;
         }
@@ -74,7 +81,7 @@ namespace Controls {
 
         protected rebuildDom(): void {
             if (this.domCreated) {
-                const parent = this._element.parents(":first");
+                const parent = this._element.parents(':first');
                 this.removeFromDom();
                 this.resetFlags();
                 parent.prepend(this.getDomElement());
@@ -83,7 +90,7 @@ namespace Controls {
             }
         }
 
-        protected removeFromDom(remove: boolean = true) {
+        protected removeFromDom(remove = true) {
             this._children.forEach(c => c.removeFromDom());
             if (remove) {
                 this._element.remove();
@@ -100,7 +107,7 @@ namespace Controls {
             control._parent = this;
             this._children.push(control);
 
-            if(this._domCreated){
+            if (this._domCreated) {
                 Control.addChildToDom(this._element, control);
             }
             return control;
@@ -118,7 +125,7 @@ namespace Controls {
         }
 
         protected createDomElement(): JQuery {
-            return $("<div>");
+            return $('<div>');
         }
 
         protected initDomElement(element: JQuery): void {
@@ -127,8 +134,5 @@ namespace Controls {
             }
         }
 
-        protected static addChildToDom(element: JQuery, control: Control): void {
-            element.append(control.getDomElement());
-        }
     }
 }

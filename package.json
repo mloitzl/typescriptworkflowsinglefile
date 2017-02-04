@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/mloitzl/typescriptworkflowsinglefile#readme",
   "devDependencies": {
-    "@types/jquery": "^2.0.40"
+    "@types/jquery": "^2.0.40",
+    "tslint": "^4.4.2",
+    "typescript": "^2.1.5"
   }
 }

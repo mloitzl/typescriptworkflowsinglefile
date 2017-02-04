@@ -2,15 +2,15 @@ namespace Controls {
     export class LiteralControl extends Control {
         private _inner: JQuery;
 
-        private _html : string;
-        public get html() : string {
+        public get html(): string {
             return this._inner[0].outerHTML;
         }
 
-        public set html(v : string) {
-            if(typeof v === "string"){
+        public set html(v: string) {
+
+            if (typeof v === 'string') {
                 this._inner.replaceWith(v);
-            }else{
+            } else {
                 const replace = $(v);
                 this._inner.replaceWith(replace);
                 // this._inner = replace;
@@ -21,10 +21,10 @@ namespace Controls {
         constructor(html: string)
         constructor(html: any) {
             super(null);
-            this._inner = typeof html === "string" ? $(html): <JQuery> html;
+            this._inner = typeof html === 'string' ? $(html) : <JQuery>html;
         }
 
-        public createDomElement(): JQuery{
+        public createDomElement(): JQuery {
             return this._inner;
         }
     }
