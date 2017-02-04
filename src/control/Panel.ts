@@ -6,5 +6,9 @@ namespace Controls {
                 this.addChild(typeof c === 'string' ? new LiteralControl($(c)) : c);
             });
         }
+
+         createDOMElement(): JQuery {
+            return $('<div/>');
+        }
     }
 }

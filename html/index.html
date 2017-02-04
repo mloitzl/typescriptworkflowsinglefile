@@ -1,9 +1,20 @@
 <html>
-    <head>
-    </head>
-    <body>
-        <h1>Hello</h1>
 
-        <script src="../dist/app.js/" ></script>
-    </body>
+<head>
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="../dist/app.js"></script>
+    
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <div id='composite'></div>
+    <script>   
+        $(function() {
+            Controls.PageManager.getRoot().addChild(new Controls.SampleCompositeControl($('#composite')));
+            Controls.PageManager.init();
+        });
+     </script>
+</body>
+
 </html>

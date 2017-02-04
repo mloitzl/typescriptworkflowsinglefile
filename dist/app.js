@@ -12,13 +12,16 @@ var Controls;
             this._children = [];
             this._enabled = true;
             this._visible = true;
+            this._childrenInitialized = false;
+            this._childControlsCreated = false;
             this._domInitialzed = false;
             this._domCreated = false;
         }
         Object.defineProperty(Control.prototype, "enabled", {
             get: function () {
-                if (this._parent)
+                if (this._parent) {
                     return this._enabled && this._parent.enabled;
+                }
                 return this._enabled;
             },
             set: function (v) {
@@ -32,10 +35,16 @@ var Controls;
             enumerable: true,
             configurable: true
         });
+        Control.addChildToDom = function (element, control) {
+            element.append(control.getDomElement());
+        };
         Object.defineProperty(Control.prototype, "visible", {
             get: function () {
                 return this._visible;
             },
+            //        public get children(): Array<Control> {
+            //            return this._children;
+            //        }
             set: function (v) {
                 this._visible = v;
             },
@@ -87,9 +96,26 @@ var Controls;
             return null;
         };
         Control.prototype.setValue = function (v) { };
+        Control.prototype.init = function (p) {
+            this._page = p;
+            this.ensureChildControls();
+            this._childrenInitialized = true;
+            this._children.forEach(function (c) {
+                c.init(p);
+            });
+        };
+        Control.prototype.ensureChildControls = function () {
+            if (!this._childControlsCreated) {
+                this.createChildControls();
+                this._childControlsCreated = true;
+            }
+        };
+        // virtual
+        Control.prototype.createChildControls = function () {
+        };
         Control.prototype.rebuildDom = function () {
             if (this.domCreated) {
-                var parent_1 = this._element.parents(":first");
+                var parent_1 = this._element.parents(':first');
                 this.removeFromDom();
                 this.resetFlags();
                 parent_1.prepend(this.getDomElement());
@@ -113,6 +139,9 @@ var Controls;
         Control.prototype.addChild = function (control) {
             control._parent = this;
             this._children.push(control);
+            if (this._childrenInitialized) {
+                control.init(this._page);
+            }
             if (this._domCreated) {
                 Control.addChildToDom(this._element, control);
             }
@@ -130,15 +159,12 @@ var Controls;
             return this._element;
         };
         Control.prototype.createDomElement = function () {
-            return $("<div>");
+            return $('<div>');
         };
         Control.prototype.initDomElement = function (element) {
             if (!this.visible) {
                 element.hide();
             }
-        };
-        Control.addChildToDom = function (element, control) {
-            element.append(control.getDomElement());
         };
         return Control;
     }());
@@ -150,7 +176,7 @@ var Controls;
         __extends(LiteralControl, _super);
         function LiteralControl(html) {
             var _this = _super.call(this, null) || this;
-            _this._inner = typeof html === "string" ? $(html) : html;
+            _this._inner = typeof html === 'string' ? $(html) : html;
             return _this;
         }
         Object.defineProperty(LiteralControl.prototype, "html", {
@@ -158,7 +184,7 @@ var Controls;
                 return this._inner[0].outerHTML;
             },
             set: function (v) {
-                if (typeof v === "string") {
+                if (typeof v === 'string') {
                     this._inner.replaceWith(v);
                 }
                 else {
@@ -178,6 +204,39 @@ var Controls;
 })(Controls || (Controls = {}));
 var Controls;
 (function (Controls) {
+    var Page = (function (_super) {
+        __extends(Page, _super);
+        function Page() {
+            return _super.call(this) || this;
+        }
+        Page.prototype.initPage = function () {
+            var _this = this;
+            this._children.forEach(function (c) { return c.init(_this); });
+        };
+        return Page;
+    }(Controls.Control));
+    Controls.Page = Page;
+})(Controls || (Controls = {}));
+var Controls;
+(function (Controls) {
+    var PageManager = (function () {
+        function PageManager() {
+        }
+        PageManager.getRoot = function () {
+            if (!PageManager._root) {
+                PageManager._root = new Controls.Page();
+            }
+            return PageManager._root;
+        };
+        PageManager.init = function () {
+            PageManager.getRoot().initPage();
+        };
+        return PageManager;
+    }());
+    Controls.PageManager = PageManager;
+})(Controls || (Controls = {}));
+var Controls;
+(function (Controls) {
     var Panel = (function (_super) {
         __extends(Panel, _super);
         function Panel() {
@@ -187,12 +246,38 @@ var Controls;
             }
             var _this = _super.call(this, null) || this;
             children.forEach(function (c) {
-                _this.addChild(typeof c === "string" ? new Controls.LiteralControl($(c)) : c);
+                _this.addChild(typeof c === 'string' ? new Controls.LiteralControl($(c)) : c);
             });
             return _this;
         }
+        Panel.prototype.createDOMElement = function () {
+            return $('<div/>');
+        };
         return Panel;
     }(Controls.Control));
     Controls.Panel = Panel;
+})(Controls || (Controls = {}));
+var Controls;
+(function (Controls) {
+    var SampleCompositeControl = (function (_super) {
+        __extends(SampleCompositeControl, _super);
+        function SampleCompositeControl(_container) {
+            var _this = _super.call(this, null) || this;
+            _this._container = _container;
+            return _this;
+        }
+        SampleCompositeControl.prototype.createDomElement = function () {
+            return this._container;
+        };
+        SampleCompositeControl.prototype.init = function (p) {
+            _super.prototype.init.call(this, p);
+            this.getDomElement();
+        };
+        SampleCompositeControl.prototype.createChildControls = function () {
+            this.addChild(new Controls.Panel('<h1>Welcome</h1>', new Controls.LiteralControl('<i>test</i>'), '<b>test</b>', new Controls.Panel('<u>test</u>', '<em>test</em>')));
+        };
+        return SampleCompositeControl;
+    }(Controls.Control));
+    Controls.SampleCompositeControl = SampleCompositeControl;
 })(Controls || (Controls = {}));
 //# sourceMappingURL=app.js.map

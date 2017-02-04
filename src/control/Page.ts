@@ -4,5 +4,9 @@ namespace Controls {
         constructor() {
             super();
         }
+
+        public initPage() {
+            this._children.forEach( c => c.init(this));
+        }
     }
 }

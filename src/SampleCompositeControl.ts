@@ -9,10 +9,19 @@ namespace Controls {
             return this._container;
         }
 
+        public init(p: Page) {
+            super.init(p);
+            this.getDomElement();
+        }
+
         public createChildControls() {
-            this.addChild(new Panel([
-                new LiteralControl('<h1>Welcome</h1>')
-            ]));
+            this.addChild(
+                new Panel(
+                    '<h1>Welcome</h1>',
+                    new LiteralControl('<i>test</i>'), 
+                    '<b>test</b>',
+                    new Panel('<u>test</u>', '<em>test</em>')
+                ));
         }
     }
 }

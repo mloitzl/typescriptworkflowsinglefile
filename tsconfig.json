@@ -4,5 +4,12 @@
         "target": "es5",
         "sourceMap": true,
         "outFile": "dist/app.js"
-    }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
 }

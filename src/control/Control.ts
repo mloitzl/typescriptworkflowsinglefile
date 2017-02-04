@@ -2,14 +2,17 @@ namespace Controls {
     export class Control {
 
         private _element: JQuery;
-        private _children: Array<Control> = [];
+        protected _children: Array<Control> = [];
 
         private _enabled = true;
         private _visible = true;
+        private _childrenInitialized = false;
+        private _childControlsCreated = false;
         private _domInitialzed = false;
         private _domCreated = false;
         private _parent: Control;
         private _uniqueId: string;
+        private _page: Page;
 
         public get enabled(): boolean {
             if (this._parent) {
@@ -36,6 +39,11 @@ namespace Controls {
         public get visible(): boolean {
             return this._visible;
         }
+
+//        public get children(): Array<Control> {
+//            return this._children;
+//        }
+
         public set visible(v: boolean) {
             this._visible = v;
         }
@@ -79,6 +87,28 @@ namespace Controls {
 
         setValue(v: any) { }
 
+        public init(p: Page) {
+            this._page = p;
+            this.ensureChildControls();
+            this._childrenInitialized = true;
+            this._children.forEach(c => {
+                c.init(p);
+            }
+            );
+        }
+
+        protected ensureChildControls() {
+            if (!this._childControlsCreated) {
+                this.createChildControls();
+                this._childControlsCreated = true;
+
+            }
+        }
+
+        // virtual
+        protected createChildControls() {
+        }
+
         protected rebuildDom(): void {
             if (this.domCreated) {
                 const parent = this._element.parents(':first');
@@ -107,6 +137,9 @@ namespace Controls {
             control._parent = this;
             this._children.push(control);
 
+            if (this._childrenInitialized) {
+                control.init(this._page);
+            }
             if (this._domCreated) {
                 Control.addChildToDom(this._element, control);
             }
