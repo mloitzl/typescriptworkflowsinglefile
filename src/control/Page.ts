@@ -6,7 +6,7 @@ namespace Controls {
         }
 
         public initPage() {
-            this._children.forEach( c => c.init(this));
+            this._children.forEach(c => c.init(this));
         }
     }
 }

@@ -95,6 +95,7 @@ var Controls;
         Control.prototype.getValue = function () {
             return null;
         };
+        // virtual
         Control.prototype.setValue = function (v) { };
         Control.prototype.init = function (p) {
             this._page = p;
@@ -257,6 +258,91 @@ var Controls;
     }(Controls.Control));
     Controls.Panel = Panel;
 })(Controls || (Controls = {}));
+var Form;
+(function (Form) {
+    var FieldControl = (function (_super) {
+        __extends(FieldControl, _super);
+        function FieldControl(id, label) {
+            var _this = _super.call(this, id) || this;
+            _this.label = label;
+            _this._hasInputControl = false;
+            return _this;
+        }
+        FieldControl.prototype.setInputValue = function (v) {
+            this.getDomElement().val(v);
+        };
+        FieldControl.prototype.getInputValue = function () {
+            return this.getDomElement().val();
+        };
+        FieldControl.prototype.setReadOnlyValue = function (v) {
+            this.getDomElement().text(v === null ? '' : v);
+        };
+        FieldControl.prototype.initDomElement = function (element) {
+            _super.prototype.initDomElement.call(this, element);
+            this._hasInputControl = this.enabled;
+            if (this._hasInputControl) {
+                this.setInputValue(this._fieldValue);
+            }
+            else {
+                this.setReadOnlyValue(this._fieldValue);
+            }
+        };
+        // override
+        FieldControl.prototype.setValue = function (v) {
+            this._fieldValue = v;
+            this.setInternalValue(v);
+        };
+        // override
+        FieldControl.prototype.getValue = function () {
+            return this.getInternalValue();
+        };
+        FieldControl.prototype.setInternalValue = function (v) {
+            if (this.domInitialzed) {
+                if (this.enabled) {
+                    this.setInputValue(v);
+                }
+                else {
+                    this.setReadOnlyValue(v);
+                }
+            }
+        };
+        FieldControl.prototype.getReadOnlyInputValue = function () {
+            return this._fieldValue;
+        };
+        FieldControl.prototype.getInternalValue = function () {
+            return this._hasInputControl &&
+                this.domInitialzed ? this.getInputValue() : this.getReadOnlyInputValue();
+        };
+        return FieldControl;
+    }(Controls.Control));
+    Form.FieldControl = FieldControl;
+})(Form || (Form = {}));
+var Form;
+(function (Form) {
+    var TextFieldControl = (function (_super) {
+        __extends(TextFieldControl, _super);
+        function TextFieldControl(id, label) {
+            return _super.call(this, id, label) || this;
+        }
+        TextFieldControl.prototype.getInputValue = function () {
+            return this._input.val();
+        };
+        TextFieldControl.prototype.setInputValue = function (v) {
+            this._input.val(v);
+        };
+        TextFieldControl.prototype.createDomElement = function () {
+            if (this.enabled) {
+                return $("<div class='scs-form textbox'>")
+                    .append(this._input = $("<input type='text'>"));
+            }
+            else {
+                return $('<span>');
+            }
+        };
+        return TextFieldControl;
+    }(Form.FieldControl));
+    Form.TextFieldControl = TextFieldControl;
+})(Form || (Form = {}));
 var Controls;
 (function (Controls) {
     var SampleCompositeControl = (function (_super) {
@@ -273,8 +359,16 @@ var Controls;
             _super.prototype.init.call(this, p);
             this.getDomElement();
         };
+        SampleCompositeControl.prototype.setValue = function (v) {
+            this._tf.setValue(v);
+        };
+        SampleCompositeControl.prototype.getValue = function () {
+            return this._tf.getValue();
+        };
         SampleCompositeControl.prototype.createChildControls = function () {
             this.addChild(new Controls.Panel('<h1>Welcome</h1>', new Controls.LiteralControl('<i>test</i>'), '<b>test</b>', new Controls.Panel('<u>test</u>', '<em>test</em>')));
+            this._tf = new Form.TextFieldControl('1', 'Text Field Man');
+            this.addChild(this._tf);
         };
         return SampleCompositeControl;
     }(Controls.Control));

@@ -40,9 +40,9 @@ namespace Controls {
             return this._visible;
         }
 
-//        public get children(): Array<Control> {
-//            return this._children;
-//        }
+        //        public get children(): Array<Control> {
+        //            return this._children;
+        //        }
 
         public set visible(v: boolean) {
             this._visible = v;
@@ -85,6 +85,7 @@ namespace Controls {
             return null;
         }
 
+        // virtual
         setValue(v: any) { }
 
         public init(p: Page) {

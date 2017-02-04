@@ -3,18 +3,21 @@
 <head>
     <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="../dist/app.js"></script>
-    
 </head>
 
 <body>
     <h1>Hello</h1>
     <div id='composite'></div>
-    <script>   
-        $(function() {
-            Controls.PageManager.getRoot().addChild(new Controls.SampleCompositeControl($('#composite')));
+    <script>
+        $(function()  {
+            var td = new Controls.SampleCompositeControl($('#composite'));
+            Controls.PageManager.getRoot().addChild(td);
             Controls.PageManager.init();
+            td.setValue('Hello World');
+         //   td.enabled = false;
+
         });
-     </script>
+    </script>
 </body>
 
 </html>
