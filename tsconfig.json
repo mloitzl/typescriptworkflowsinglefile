@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "sourceRoot": "src",
+        "target": "es5",
+        "sourceMap": true,
+        "outFile": "dist/app.js"
+    }
+}
