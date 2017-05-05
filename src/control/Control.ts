@@ -1,5 +1,5 @@
 namespace Controls {
-    export class Control {
+    export abstract class Control {
 
         private _element: JQuery;
         protected _children: Array<Control> = [];
@@ -35,6 +35,13 @@ namespace Controls {
             }
         }
 
+        protected getValue(): any {
+            throw 'Should be overwritten in FieldControl';
+        };
+
+        protected setValue(v: any) {
+            throw 'Should be overwritten in FieldControl';
+        };
 
         public get visible(): boolean {
             return this._visible;
@@ -77,16 +84,8 @@ namespace Controls {
             this._uniqueId = v;
         }
 
-        constructor(private _id: string = null) { }
-
-
-        // virtual
-        getValue(): any {
-            return null;
+        constructor(private _id: string = null) {
         }
-
-        // virtual
-        setValue(v: any) { }
 
         public init(p: Page) {
             this._page = p;
@@ -102,13 +101,10 @@ namespace Controls {
             if (!this._childControlsCreated) {
                 this.createChildControls();
                 this._childControlsCreated = true;
-
             }
         }
 
-        // virtual
-        protected createChildControls() {
-        }
+        protected createChildControls() { }
 
         protected rebuildDom(): void {
             if (this.domCreated) {
@@ -159,7 +155,7 @@ namespace Controls {
         }
 
         protected createDomElement(): JQuery {
-            return $('<div>');
+            return $('<span>');
         }
 
         protected initDomElement(element: JQuery): void {

@@ -38,6 +38,14 @@ var Controls;
         Control.addChildToDom = function (element, control) {
             element.append(control.getDomElement());
         };
+        Control.prototype.getValue = function () {
+            throw 'Should be overwritten in FieldControl';
+        };
+        ;
+        Control.prototype.setValue = function (v) {
+            throw 'Should be overwritten in FieldControl';
+        };
+        ;
         Object.defineProperty(Control.prototype, "visible", {
             get: function () {
                 return this._visible;
@@ -91,12 +99,6 @@ var Controls;
             enumerable: true,
             configurable: true
         });
-        // virtual
-        Control.prototype.getValue = function () {
-            return null;
-        };
-        // virtual
-        Control.prototype.setValue = function (v) { };
         Control.prototype.init = function (p) {
             this._page = p;
             this.ensureChildControls();
@@ -111,9 +113,7 @@ var Controls;
                 this._childControlsCreated = true;
             }
         };
-        // virtual
-        Control.prototype.createChildControls = function () {
-        };
+        Control.prototype.createChildControls = function () { };
         Control.prototype.rebuildDom = function () {
             if (this.domCreated) {
                 var parent_1 = this._element.parents(':first');
@@ -160,7 +160,7 @@ var Controls;
             return this._element;
         };
         Control.prototype.createDomElement = function () {
-            return $('<div>');
+            return $('<span>');
         };
         Control.prototype.initDomElement = function (element) {
             if (!this.visible) {

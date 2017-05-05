@@ -24,7 +24,7 @@ namespace Controls {
             return this._tf.getValue();
         }
 
-        public createChildControls() {
+        public createChildControls(): void {
             this.addChild(
                 new Panel(
                     '<h1>Welcome</h1>',

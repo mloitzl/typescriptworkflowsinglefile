@@ -20,7 +20,7 @@ namespace Form {
             if (this.enabled) {
                 return $(`<div class='scs-form textbox'>`)
                     .append(this._input = $(`<input type='text'>`));
-            }else{
+            } else {
                 return $('<span>');
             }
         }

@@ -1,6 +1,6 @@
 namespace Form {
 
-    export class FieldControl extends Controls.Control {
+    export abstract class FieldControl extends Controls.Control {
 
         private _hasInputControl = false;
         private _fieldValue: any;
