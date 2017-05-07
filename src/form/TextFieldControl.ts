@@ -1,28 +1,29 @@
-namespace Form {
-    export class TextFieldControl extends FieldControl {
+import { FieldControl } from './FieldControl';
 
-        private _input: JQuery;
+export class TextFieldControl extends FieldControl {
 
-        constructor(id: string, label: string) {
-            super(id, label);
-        }
+    private _input: JQuery;
 
-        public getInputValue() {
-            return this._input.val();
-        }
+    constructor(id: string, label: string) {
+        super(id, label);
+    }
 
-        public setInputValue(v: any) {
-            this._input.val(v);
-        }
+    public getInputValue() {
+        return this._input.val();
+    }
+
+    public setInputValue(v: any) {
+        this._input.val(v);
+    }
 
 
-        public createDomElement(): JQuery {
-            if (this.enabled) {
-                return $(`<div class='scs-form textbox'>`)
-                    .append(this._input = $(`<input type='text'>`));
-            } else {
-                return $('<span>');
-            }
+    public createDomElement(): JQuery {
+        if (this.enabled) {
+            return $(`<div class='scs-form textbox'>`)
+                .append(this._input = $(`<input type='text'>`));
+        } else {
+            return $('<span>');
         }
     }
+
 }

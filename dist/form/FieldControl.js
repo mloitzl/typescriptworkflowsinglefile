@@ -1,62 +1,57 @@
-import { Control } from '../control/Control';
-export abstract class FieldControl extends Control {
-    private _hasInputControl = false;
-    private _fieldValue: any;
-
-    constructor(id?: string, public label?: string) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Control_1 = require("../control/Control");
+class FieldControl extends Control_1.Control {
+    constructor(id, label) {
         super(id);
+        this.label = label;
+        this._hasInputControl = false;
     }
-
-    protected setInputValue(v: any) {
+    setInputValue(v) {
         this.getDomElement().val(v);
     }
-
-    protected getInputValue(): any {
+    getInputValue() {
         return this.getDomElement().val();
     }
-
-    protected setReadOnlyValue(v: any) {
+    setReadOnlyValue(v) {
         this.getDomElement().text(v === null ? '' : v);
     }
-
-    protected initDomElement(element: JQuery) {
+    initDomElement(element) {
         super.initDomElement(element);
-
         this._hasInputControl = this.enabled;
-
         if (this._hasInputControl) {
             this.setInputValue(this._fieldValue);
-        } else {
+        }
+        else {
             this.setReadOnlyValue(this._fieldValue);
         }
     }
-
     // override
-    public setValue(v: any) {
+    setValue(v) {
         this._fieldValue = v;
         this.setInternalValue(v);
     }
     // override
-    public getValue(): any {
+    getValue() {
         return this.getInternalValue();
     }
-
-    private setInternalValue(v: any) {
+    setInternalValue(v) {
         if (this.domInitialzed) {
             if (this.enabled) {
                 this.setInputValue(v);
-            } else {
+            }
+            else {
                 this.setReadOnlyValue(v);
             }
         }
     }
-
-    public getReadOnlyInputValue(): any {
+    getReadOnlyInputValue() {
         return this._fieldValue;
     }
-
-    private getInternalValue(): any {
+    getInternalValue() {
         return this._hasInputControl &&
             this.domInitialzed ? this.getInputValue() : this.getReadOnlyInputValue();
     }
 }
+exports.FieldControl = FieldControl;
+//# sourceMappingURL=FieldControl.js.map

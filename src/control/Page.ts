@@ -1,12 +1,14 @@
-namespace Controls {
-    export class Page extends Control {
+import { Control } from './Control';
 
-        constructor() {
-            super();
-        }
+export class Page extends Control {
 
-        public initPage() {
-            this._children.forEach(c => c.init(this));
-        }
+    constructor() {
+        super();
     }
+
+    public initPage() {
+        this._children.forEach(c => c.init(this));
+    }
+
 }
+

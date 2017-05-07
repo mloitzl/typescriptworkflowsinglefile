@@ -1,31 +1,33 @@
-namespace Controls {
-    export class LiteralControl extends Control {
-        private _inner: JQuery;
+import { Control } from './Control';
 
-        public get html(): string {
-            return this._inner[0].outerHTML;
-        }
+export class LiteralControl extends Control {
+    private _inner: JQuery;
 
-        public set html(v: string) {
+    public get html(): string {
+        return this._inner[0].outerHTML;
+    }
 
-            if (typeof v === 'string') {
-                this._inner.replaceWith(v);
-            } else {
-                const replace = $(v);
-                this._inner.replaceWith(replace);
-                // this._inner = replace;
-            }
-        }
+    public set html(v: string) {
 
-        constructor(html: JQuery)
-        constructor(html: string)
-        constructor(html: any) {
-            super(null);
-            this._inner = typeof html === 'string' ? $(html) : <JQuery>html;
-        }
-
-        public createDomElement(): JQuery {
-            return this._inner;
+        if (typeof v === 'string') {
+            this._inner.replaceWith(v);
+        } else {
+            const replace = $(v);
+            this._inner.replaceWith(replace);
+            // this._inner = replace;
         }
     }
+
+    constructor(html: JQuery)
+    constructor(html: string)
+    constructor(html: any) {
+        super(null);
+        this._inner = typeof html === 'string' ? $(html) : <JQuery>html;
+    }
+
+    public createDomElement(): JQuery {
+        return this._inner;
+    }
+
 }
+

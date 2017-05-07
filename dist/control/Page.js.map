@@ -1,0 +1,1 @@
+{"version":3,"file":"Page.js","sourceRoot":"/Users/Loitzl/Development/typescriptworkflowsinglefile/src/","sources":["control/Page.ts"],"names":[],"mappings":";;AAAA,uCAAoC;AAEpC,UAAkB,SAAQ,iBAAO;IAE7B;QACI,KAAK,EAAE,CAAC;IACZ,CAAC;IAEM,QAAQ;QACX,IAAI,CAAC,SAAS,CAAC,OAAO,CAAC,CAAC,IAAI,CAAC,CAAC,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC;IAC9C,CAAC;CAEJ;AAVD,oBAUC"}

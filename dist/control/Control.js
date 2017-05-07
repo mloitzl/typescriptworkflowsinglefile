@@ -1,32 +1,26 @@
-import { Page } from './Page';
-
-export class Control {
-    private _element: JQuery;
-    protected _children: Array<Control> = [];
-
-    private _enabled = true;
-    private _visible = true;
-    private _childrenInitialized = false;
-    private _childControlsCreated = false;
-    private _domInitialzed = false;
-    private _domCreated = false;
-    private _parent: Control;
-    private _uniqueId: string;
-    private _page: Page;
-
-    public get enabled(): boolean {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Control {
+    constructor(_id = null) {
+        this._id = _id;
+        this._children = [];
+        this._enabled = true;
+        this._visible = true;
+        this._childrenInitialized = false;
+        this._childControlsCreated = false;
+        this._domInitialzed = false;
+        this._domCreated = false;
+    }
+    get enabled() {
         if (this._parent) {
             return this._enabled && this._parent.enabled;
         }
-
         return this._enabled;
     }
-
-    protected static addChildToDom(element: JQuery, control: Control): void {
+    static addChildToDom(element, control) {
         element.append(control.getDomElement());
     }
-
-    public set enabled(v: boolean) {
+    set enabled(v) {
         if (v !== this._enabled) {
             const temp = this.getValue();
             this._enabled = v;
@@ -34,106 +28,87 @@ export class Control {
             this.setValue(temp);
         }
     }
-
-    protected getValue(): any {
+    getValue() {
         throw 'Should be overwritten in FieldControl';
-    };
-
-    protected setValue(v: any) {
+    }
+    ;
+    setValue(v) {
         throw 'Should be overwritten in FieldControl';
-    };
-
-    public get visible(): boolean {
+    }
+    ;
+    get visible() {
         return this._visible;
     }
-
     //        public get children(): Array<Control> {
     //            return this._children;
     //        }
-
-    public set visible(v: boolean) {
+    set visible(v) {
         this._visible = v;
     }
-
-    public get domInitialzed(): boolean {
+    get domInitialzed() {
         return this._domInitialzed;
     }
-
-    public set domInitialzed(v: boolean) {
+    set domInitialzed(v) {
         this._domInitialzed = v;
     }
-
-    public get domCreated(): boolean {
+    get domCreated() {
         return this._domCreated;
     }
-    public set domCreated(v: boolean) {
+    set domCreated(v) {
         this._domCreated = v;
     }
-
-    public get parent(): Control {
+    get parent() {
         return this._parent;
     }
-    public set parent(v: Control) {
+    set parent(v) {
         this._parent = v;
     }
-
-    public get uniqueId(): string {
+    get uniqueId() {
         return this._uniqueId;
     }
-    public set uniqueId(v: string) {
+    set uniqueId(v) {
         this._uniqueId = v;
     }
-
-    constructor(private _id: string = null) {
-    }
-
-    public init(p: Page) {
+    init(p) {
         this._page = p;
         this.ensureChildControls();
         this._childrenInitialized = true;
         this._children.forEach(c => {
             c.init(p);
-        }
-        );
+        });
     }
-
-    protected ensureChildControls() {
+    ensureChildControls() {
         if (!this._childControlsCreated) {
             this.createChildControls();
             this._childControlsCreated = true;
         }
     }
-
-    protected createChildControls() { }
-
-    protected rebuildDom(): void {
+    createChildControls() { }
+    rebuildDom() {
         if (this.domCreated) {
             const parent = this._element.parents(':first');
             this.removeFromDom();
             this.resetFlags();
             parent.prepend(this.getDomElement());
-        } else {
+        }
+        else {
             this.resetFlags();
         }
     }
-
-    protected removeFromDom(remove = true) {
+    removeFromDom(remove = true) {
         this._children.forEach(c => c.removeFromDom());
         if (remove) {
             this._element.remove();
         }
     }
-
-    protected resetFlags() {
+    resetFlags() {
         this._domInitialzed = false;
         this._domCreated = false;
         this._children.forEach(c => c.resetFlags());
     }
-
-    public addChild<T extends Control>(control: T): T {
+    addChild(control) {
         control._parent = this;
         this._children.push(control);
-
         if (this._childrenInitialized) {
             control.init(this._page);
         }
@@ -142,8 +117,7 @@ export class Control {
         }
         return control;
     }
-
-    public getDomElement(): JQuery {
+    getDomElement() {
         if (!this._domCreated) {
             this._element = this.createDomElement();
             this._children.forEach(c => Control.addChildToDom(this._element, c));
@@ -153,15 +127,14 @@ export class Control {
         }
         return this._element;
     }
-
-    protected createDomElement(): JQuery {
+    createDomElement() {
         return $('<span>');
     }
-
-    protected initDomElement(element: JQuery): void {
+    initDomElement(element) {
         if (!this.visible) {
             element.hide();
         }
     }
-
 }
+exports.Control = Control;
+//# sourceMappingURL=Control.js.map

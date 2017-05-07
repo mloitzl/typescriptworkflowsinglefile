@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
         "sourceRoot": "src",
-        "target": "es5",
+        "target": "es6",
         "sourceMap": true,
-        "outFile": "dist/app.js"
+        "outDir": "dist/",
+        "module": "commonjs"
     },
     "include": [
         "src/**/*"
