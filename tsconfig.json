@@ -1,10 +1,15 @@
 {
     "compilerOptions": {
         "sourceRoot": "src",
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "target": "es6",
         "sourceMap": true,
-        "outDir": "dist/",
-        "module": "commonjs"
+        "outDir": "dist/"
+      //  "module": "es6"
     },
     "include": [
         "src/**/*"

@@ -3,7 +3,6 @@ import { Page } from './Page';
 export class Control {
     private _element: JQuery;
     protected _children: Array<Control> = [];
-
     private _enabled = true;
     private _visible = true;
     private _childrenInitialized = false;

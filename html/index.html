@@ -2,7 +2,7 @@
 
 <head>
     <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="../dist/app.js"></script>
+    <script src="/bundle.js"></script>
 </head>
 
 <body>
@@ -10,9 +10,9 @@
     <div id='composite'></div>
     <script>
         $(function()  {
-            var td = new Controls.SampleCompositeControl($('#composite'));
-            Controls.PageManager.getRoot().addChild(td);
-            Controls.PageManager.init();
+            var td = new SampleCompositeControl($('#composite'));
+            PageManager.getRoot().addChild(td);
+            PageManager.init();
             td.setValue('Hello World');
          //   td.enabled = false;
 
