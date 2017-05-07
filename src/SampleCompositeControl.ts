@@ -3,6 +3,7 @@ import { Panel } from './control/Panel';
 import { Control } from './control/Control';
 import { TextFieldControl } from './form/TextFieldControl';
 import { Page } from './control/Page';
+import { PageManager } from './control/PageManager';
 
 export class SampleCompositeControl extends Control {
 
@@ -10,6 +11,7 @@ export class SampleCompositeControl extends Control {
 
     constructor(private _container: JQuery) {
         super(null);
+        PageManager.init();
     }
 
     public createDomElement(): JQuery {

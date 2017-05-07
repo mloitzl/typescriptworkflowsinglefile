@@ -1,6 +1,9 @@
+import { PageManager } from './PageManager';
 import { Control } from './Control';
 
 export class Page extends Control {
+
+    private _pageManager: PageManager = null;
 
     constructor() {
         super();

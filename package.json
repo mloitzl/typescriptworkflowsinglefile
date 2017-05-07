@@ -22,6 +22,12 @@
   "homepage": "https://github.com/mloitzl/typescriptworkflowsinglefile#readme",
   "devDependencies": {
     "@types/jquery": "^2.0.40",
+    "@types/node": "^7.0.18",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "express": "^4.15.2",
     "rimraf": "^2.6.1",
     "ts-loader": "^2.0.3",

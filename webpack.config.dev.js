@@ -9,8 +9,9 @@ var config = {
     resolve: { 
         extensions: ['.ts', '.tsx', '.js']
     },
-    // resolve: { modules: ['src'] },
+    // resolve: { modules: ['src', 'node_modules'] },
     entry: [
+        "babel-polyfill",
         "webpack-hot-middleware/client?reload=true",
         path.resolve(__dirname, "src/SampleCompositeControl")
     ],
@@ -19,7 +20,8 @@ var config = {
         // filename: '[name].js',
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/'
+        publicPath: '/assets/',
+        library: ['SampleCompositeControl']
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'src')
@@ -34,7 +36,7 @@ var config = {
     ],
     module: {
         rules: [
-            { test: /\.tsx?$/, include: path.join(__dirname, 'src'), loader: 'ts-loader' }
+            { test: /\.tsx?$/, include: path.join(__dirname, 'src'), use:[ 'babel-loader','ts-loader'] }
         ]
     }
 };
