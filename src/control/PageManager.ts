@@ -1,7 +1,13 @@
 import { Page } from './Page';
-
+import {SampleCompositeControl} from '../SampleCompositeControl';
 
 export class PageManager {
+
+    static _readyCallBackqueue = [];
+
+    static ready(callback: () => void){
+        PageManager._readyCallBackqueue.push(callback);
+    }
 
     private static _root: Page;
     static getRoot(): Page {
@@ -12,6 +18,7 @@ export class PageManager {
     }
 
     public static init(): void {
+        PageManager._readyCallBackqueue.forEach(f => f(SampleCompositeControl));
         PageManager.getRoot().initPage();
     }
 

@@ -21,6 +21,11 @@ export class Control {
         return this._enabled;
     }
 
+    public get children(): Control[]
+    {
+        return this._children;
+    }
+
     protected static addChildToDom(element: JQuery, control: Control): void {
         element.append(control.getDomElement());
     }

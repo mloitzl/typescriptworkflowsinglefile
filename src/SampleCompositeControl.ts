@@ -11,7 +11,7 @@ export class SampleCompositeControl extends Control {
 
     constructor(private _container: JQuery) {
         super(null);
-        PageManager.init();
+        //PageManager.init();
     }
 
     public createDomElement(): JQuery {
@@ -37,7 +37,8 @@ export class SampleCompositeControl extends Control {
                 '<h1>Welcome</h1>',
                 new LiteralControl('<i>test</i>'),
                 '<b>test</b>',
-                new Panel('<u>test</u>', '<em>test</em>')
+                new Panel('<u>test</u>', '<em>test</em>'),
+                new LiteralControl("<hr/>")
             ));
         this._tf = new TextFieldControl('1', 'Text Field Man');
         this.addChild(this._tf);

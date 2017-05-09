@@ -4,16 +4,17 @@ var webpack = require('webpack');
 var config = {
     //    debug: true,
     devtool: 'inline-source-map',
-    
+
     // context: path.join(__dirname, "src"),
-    resolve: { 
+    resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
     // resolve: { modules: ['src', 'node_modules'] },
     entry: [
         "babel-polyfill",
         "webpack-hot-middleware/client?reload=true",
-        path.resolve(__dirname, "src/SampleCompositeControl")
+        path.resolve(__dirname, "src/SampleCompositeControl"),
+        path.resolve(__dirname, "src/control/PageManager")
     ],
     target: 'web',
     output: {
@@ -21,7 +22,7 @@ var config = {
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '/assets/',
-        library: ['SampleCompositeControl']
+        library: ['CodeName']
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'src')
@@ -35,9 +36,11 @@ var config = {
         new webpack.NoEmitOnErrorsPlugin()
     ],
     module: {
-        rules: [
-            { test: /\.tsx?$/, include: path.join(__dirname, 'src'), use:[ 'babel-loader','ts-loader'] }
-        ]
+        rules: [{
+            test: /\.tsx?$/,
+            include: path.join(__dirname, 'src'),
+            use: ['babel-loader', 'ts-loader']
+        }]
     }
 };
 

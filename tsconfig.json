@@ -8,8 +8,8 @@
         "experimentalDecorators": true,
         "target": "es6",
         "sourceMap": true,
-        "outDir": "dist/"
-      //  "module": "es6"
+        "outDir": "dist/",
+        "module": "es6"
     },
     "include": [
         "src/**/*"

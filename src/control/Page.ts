@@ -10,7 +10,9 @@ export class Page extends Control {
     }
 
     public initPage() {
-        this._children.forEach(c => c.init(this));
+        console.log("Initing Page");
+        
+        this.children.forEach(c => c.init(this));
     }
 
 }
