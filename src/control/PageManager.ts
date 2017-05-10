@@ -1,11 +1,12 @@
 import { Page } from './Page';
-import {SampleCompositeControl} from '../SampleCompositeControl';
+import { SampleCompositeControl } from '../SampleCompositeControl';
+import { GenericClientWebPart } from "./GenericClientWebPart";
 
 export class PageManager {
 
     static _readyCallBackqueue = [];
 
-    static ready(callback: () => void){
+    static ready(callback: () => void) {
         PageManager._readyCallBackqueue.push(callback);
     }
 
@@ -18,7 +19,10 @@ export class PageManager {
     }
 
     public static init(): void {
-        PageManager._readyCallBackqueue.forEach(f => f(SampleCompositeControl));
+        //        PageManager._readyCallBackqueue.forEach(f => f(SampleCompositeControl));
+        $(".scs-genericClientWebPart").each((i, element) => { 
+            PageManager.getRoot().addChild(new GenericClientWebPart($(element)));
+        });
         PageManager.getRoot().initPage();
     }
 

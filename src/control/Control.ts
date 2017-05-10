@@ -12,6 +12,14 @@ export class Control {
     private _parent: Control;
     private _uniqueId: string;
     private _page: Page;
+    private _loadingDeferred: (value?: Control) => void;
+    public  ready: Promise<Control>;
+
+    constructor(private _id: string = null) {
+        this.ready = new Promise<Control>( (res, rej) => {
+            this._loadingDeferred = res;
+        });
+    }
 
     public get enabled(): boolean {
         if (this._parent) {
@@ -28,6 +36,10 @@ export class Control {
 
     protected static addChildToDom(element: JQuery, control: Control): void {
         element.append(control.getDomElement());
+    }
+
+    public loaded() : void{
+        this._loadingDeferred(this);
     }
 
     public set enabled(v: boolean) {
@@ -86,9 +98,6 @@ export class Control {
     }
     public set uniqueId(v: string) {
         this._uniqueId = v;
-    }
-
-    constructor(private _id: string = null) {
     }
 
     public init(p: Page) {

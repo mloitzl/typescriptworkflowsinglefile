@@ -30,6 +30,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "express": "^4.15.2",
     "rimraf": "^2.6.1",
+    "string-replace-loader": "^1.2.0",
     "ts-loader": "^2.0.3",
     "tslint": "^4.4.2",
     "typescript": "^2.3.2",

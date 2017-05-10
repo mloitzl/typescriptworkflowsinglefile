@@ -39,7 +39,20 @@ var config = {
         rules: [{
             test: /\.tsx?$/,
             include: path.join(__dirname, 'src'),
-            use: ['babel-loader', 'ts-loader']
+            use: [{
+                    loader: 'babel-loader'
+                },
+                {
+                    loader: 'string-replace-loader',
+                    options: {
+                        search: '_import(',
+                        replace: 'import('
+                    }
+                },
+                {
+                    loader: 'ts-loader'
+                }
+            ]
         }]
     }
 };

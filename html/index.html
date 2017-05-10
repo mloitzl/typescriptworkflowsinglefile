@@ -7,14 +7,14 @@
 
 <body>
     <h1>Hello</h1>
-    <div id='composite'></div>
+    <div class='scs-genericClientWebPart' data-configMode="inline" data-configData='{"__type":"SampleCompositeControl","visible":true,"title":"Test Title"}'></div>
     <script>
         // $(function()  {
 
-        window.CodeName.PageManager.ready(function (control) {
-            window.CodeName.PageManager.getRoot().addChild(new control($("#composite")))
-            console.log("Page loading");
-        });
+        // window.CodeName.PageManager.ready(function (control) {
+        //     window.CodeName.PageManager.getRoot().addChild(new control($("#composite")))
+        //     console.log("Page loading");
+        // });
         window.CodeName.PageManager.init();
 
         // var td = new SampleCompositeControl.SampleCompositeControl($('#composite'));

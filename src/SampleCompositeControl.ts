@@ -4,19 +4,24 @@ import { Control } from './control/Control';
 import { TextFieldControl } from './form/TextFieldControl';
 import { Page } from './control/Page';
 import { PageManager } from './control/PageManager';
+import { ConfigurationManager } from "./config/ConfigurationManager";
+import { ConfigurationType } from "./config/ConfigurationType";
+import { IConfiguration } from "./config/IConfiguration";
 
-export class SampleCompositeControl extends Control {
-
+export class SampleCompositeControl extends Control implements IConfiguration {
+    name: string;
+    getTypename(): string {
+        return this.constructor.name;
+    }
     private _tf: TextFieldControl;
 
-    constructor(private _container: JQuery) {
-        super(null);
-        //PageManager.init();
-    }
+    // constructor(private _container?: JQuery) {
+    //     super(null);
+    // }
 
-    public createDomElement(): JQuery {
-        return this._container;
-    }
+    // public createDomElement(): JQuery {
+    //     return this._container;
+    // }
 
     public init(p: Page) {
         super.init(p);
@@ -43,5 +48,8 @@ export class SampleCompositeControl extends Control {
         this._tf = new TextFieldControl('1', 'Text Field Man');
         this.addChild(this._tf);
     }
-
+    
 }
+
+ConfigurationManager.registerType(new ConfigurationType("SampleCompositeControl", (c?) =>  c || new SampleCompositeControl()));
+
