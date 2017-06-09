@@ -3,10 +3,9 @@ import { Panel } from './control/Panel';
 import { Control } from './control/Control';
 import { TextFieldControl } from './form/TextFieldControl';
 import { Page } from './control/Page';
-import { PageManager } from './control/PageManager';
-import { ConfigurationManager } from "./config/ConfigurationManager";
-import { ConfigurationType } from "./config/ConfigurationType";
-import { IConfiguration } from "./config/IConfiguration";
+import { ConfigurationManager } from './config/ConfigurationManager';
+import { ConfigurationType } from './config/ConfigurationType';
+import { IConfiguration } from './config/IConfiguration';
 
 export class SampleCompositeControl extends Control implements IConfiguration {
     name: string;
@@ -43,13 +42,13 @@ export class SampleCompositeControl extends Control implements IConfiguration {
                 new LiteralControl('<i>test</i>'),
                 '<b>test</b>',
                 new Panel('<u>test</u>', '<em>test</em>'),
-                new LiteralControl("<hr/>")
+                new LiteralControl('<hr/>')
             ));
         this._tf = new TextFieldControl('1', 'Text Field Man');
         this.addChild(this._tf);
     }
-    
+
 }
 
-ConfigurationManager.registerType(new ConfigurationType("SampleCompositeControl", (c?) =>  c || new SampleCompositeControl()));
+ConfigurationManager.registerType(new ConfigurationType('SampleCompositeControl', (c?) =>  c || new SampleCompositeControl()));
 

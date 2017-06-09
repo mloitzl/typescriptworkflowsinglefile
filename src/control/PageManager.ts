@@ -5,12 +5,12 @@ import { GenericClientWebPart } from "./GenericClientWebPart";
 export class PageManager {
 
     static _readyCallBackqueue = [];
+    private static _root: Page;
 
     static ready(callback: () => void) {
         PageManager._readyCallBackqueue.push(callback);
     }
 
-    private static _root: Page;
     static getRoot(): Page {
         if (!PageManager._root) {
             PageManager._root = new Page();
@@ -20,7 +20,7 @@ export class PageManager {
 
     public static init(): void {
         //        PageManager._readyCallBackqueue.forEach(f => f(SampleCompositeControl));
-        $(".scs-genericClientWebPart").each((i, element) => { 
+        $(".genericClientWebPart").each((i, element) => { 
             PageManager.getRoot().addChild(new GenericClientWebPart($(element)));
         });
         PageManager.getRoot().initPage();

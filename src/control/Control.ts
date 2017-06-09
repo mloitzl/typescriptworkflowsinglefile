@@ -13,14 +13,17 @@ export class Control {
     private _uniqueId: string;
     private _page: Page;
     private _loadingDeferred: (value?: Control) => void;
-    public  ready: Promise<Control>;
+    public ready: Promise<Control>;
+
+    protected static addChildToDom(element: JQuery, control: Control): void {
+        element.append(control.getDomElement());
+    }
 
     constructor(private _id: string = null) {
-        this.ready = new Promise<Control>( (res, rej) => {
+        this.ready = new Promise<Control>((res, rej) => {
             this._loadingDeferred = res;
         });
     }
-
     public get enabled(): boolean {
         if (this._parent) {
             return this._enabled && this._parent.enabled;
@@ -29,16 +32,11 @@ export class Control {
         return this._enabled;
     }
 
-    public get children(): Control[]
-    {
+    public get children(): Control[] {
         return this._children;
     }
 
-    protected static addChildToDom(element: JQuery, control: Control): void {
-        element.append(control.getDomElement());
-    }
-
-    public loaded() : void{
+    public loaded(): void {
         this._loadingDeferred(this);
     }
 

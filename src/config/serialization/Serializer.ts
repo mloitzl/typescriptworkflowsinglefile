@@ -1,21 +1,17 @@
-import { IConfiguration } from "../IConfiguration";
-import { SerializationError } from "./SerializationError";
-import { Dictionary } from "../../collections/Dictionary";
-import { Collection } from "../../collections/Collection";
+import { IConfiguration } from '../IConfiguration';
+import { SerializationError } from './SerializationError';
+import { Dictionary } from '../../collections/Dictionary';
+
 declare function _import<T extends { [K: string]: any; }>(path: string): Promise<T>;
 
 export class Serializer {
 
-    constructor() {
-    }
-
     private static async getModule(templateName) {
         try {
-            let template = await _import(`../../${templateName}`)
-            console.log(template);
+            let template = await _import(`../../${templateName}`);
             return template;
         } catch (err) {
-            console.error("template error");
+            console.error('template error');
             return new Error(err);
         }
     }
@@ -48,21 +44,19 @@ export class Serializer {
                     var t = new proto[obj["__type"] || obj["__constructor"]]();
                     Dictionary.forEach(obj,
                         (k, v) => {
-                            if (k !== "__type" && k !== "__constructor" && typeof t[k] != "function") {
+                            if (k !== "__type" && k !== "__constructor" && typeof t[k] !== 'function') {
                                 t[k] = v;
                             }
                         });
                     return t;
                     //}
                 } else {
-                    throw `Class not found: ${obj["__type"] || obj["__constructor"]}`;
+                    throw `Class not found: ${obj['__type'] || obj['__constructor']}`;
                 }
             }
 
             Dictionary.forEach(obj, (k, v) => obj[k] = this.fixTree(v));
         }
-        debugger;
         // return obj;
     }
-
 }
